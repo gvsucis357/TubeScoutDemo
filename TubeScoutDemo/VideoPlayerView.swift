@@ -12,8 +12,24 @@ struct VideoPlayerView: View {
     let videoId: String
     
     var body: some View {
-        Text("Video Player View")
+        WebView(url: URL(string: "https://www.youtube.com/embed/\(videoId)")!)
+            .edgesIgnoringSafeArea(.all)
     }
 }
 
+struct WebView: UIViewRepresentable {
+    // Explicitly declare the associated type
+    typealias UIViewType = WKWebView
+    
+    let url: URL
+    
+    func makeUIView(context: Context) -> WKWebView {
+        return WKWebView()
+    }
+    
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        uiView.load(URLRequest(url: url))
+    }
+
+}
 
